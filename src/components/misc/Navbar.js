@@ -1,57 +1,91 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Menu } from 'semantic-ui-react'
-import { useAuth } from '../context/AuthContext' //chỗ này import từ export phương thức useAuth() của AuthContext -->chạy vào useAuth()
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Menu, Icon } from "semantic-ui-react";
+import { useAuth } from "../context/AuthContext"; //chỗ này import từ export phương thức useAuth() của AuthContext -->chạy vào useAuth()
 
 //thứ tự các phương thức sẽ luôn được gọi trong 1 class component hoặc function component -->Constuctor > render/return > componentDidMount
-function Navbar() { //Constructor sẽ luôn được chạy đầu tiên
-  const { getUser, userIsAuthenticated, userLogout } = useAuth()
+function Navbar() {
+  //Constructor sẽ luôn được chạy đầu tiên
+  const { getUser, userIsAuthenticated, userLogout } = useAuth();
 
   const logout = () => {
-    userLogout() //nếu chạy dòng này nó sẽ gọi qua phương thức userLogout() của AuthContext
-  }
+    userLogout(); //nếu chạy dòng này nó sẽ gọi qua phương thức userLogout() của AuthContext
+  };
 
   const enterMenuStyle = () => {
-    return userIsAuthenticated() ? { "display": "none" } : { "display": "block" }
-  }
+    return userIsAuthenticated() ? { display: "none" } : { display: "block" };
+  };
 
   const logoutMenuStyle = () => {
-    return userIsAuthenticated() ? { "display": "block" } : { "display": "none" }
-  }
+    return userIsAuthenticated() ? { display: "block" } : { display: "none" };
+  };
 
   const adminPageStyle = () => {
-    const user = getUser()
-    return user && user.role === 'ADMIN' ? { "display": "block" } : { "display": "none" }
-  }
+    const user = getUser();
+    return user && user.role === "ADMIN"
+      ? { display: "block" }
+      : { display: "none" };
+  };
 
   const userPageStyle = () => {
-    const user = getUser()
-    return user && user.role === 'USER' ? { "display": "block" } : { "display": "none" }
-  }
+    const user = getUser();
+    return user && user.role === "USER"
+      ? { display: "block" }
+      : { display: "none" };
+  };
 
   const getUserName = () => {
-    const user = getUser()
-    return user ? user.name : ''
-  }
+    const user = getUser();
+    return user ? user.name : "";
+  };
 
-   //render/return sẽ luôn được chạy sau Constructor -->tất cả các phương thức trong return sẽ được chạy
-   //trong render/return muốn hiển thị giá trị hoặc gọi bất kỳ phương thức nào thì dùng dấu {}
+  //render/return sẽ luôn được chạy sau Constructor -->tất cả các phương thức trong return sẽ được chạy
+  //trong render/return muốn hiển thị giá trị hoặc gọi bất kỳ phương thức nào thì dùng dấu {}
   return (
-    <Menu inverted color='blue' stackable size='massive' style={{borderRadius: 0}}>
+    <Menu
+      inverted
+      color="blue"
+      stackable
+      size="massive"
+      style={{ borderRadius: 0 }}
+    >
       <Container>
         <Menu.Item header>Book-UI</Menu.Item>
-        <Menu.Item as={Link} exact='true' to="/">Home</Menu.Item>
-        <Menu.Item as={Link} to="/adminpage" style={adminPageStyle()}>AdminPage</Menu.Item>
-        <Menu.Item as={Link} to="/userpage" style={userPageStyle()}>UserPage</Menu.Item>
-        <Menu.Menu position='right'>
-          <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>Login</Menu.Item>
-          <Menu.Item as={Link} to="/signup" style={enterMenuStyle()}>Sign Up</Menu.Item>
-          <Menu.Item header style={logoutMenuStyle()}>{`Hi ${getUserName()}`}</Menu.Item>
-          <Menu.Item as={Link} to="/" style={logoutMenuStyle()} onClick={logout}>Logout</Menu.Item>
+        <Menu.Item as={Link} exact="true" to="/">
+          Home
+        </Menu.Item>
+        <Menu.Item as={Link} to="/adminpage" style={adminPageStyle()}>
+          AdminPage
+        </Menu.Item>
+        <Menu.Item as={Link} to="/userpage" style={userPageStyle()}>
+          UserPage
+        </Menu.Item>
+        <Menu.Menu position="right">
+          <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>
+            Login
+          </Menu.Item>
+          <Menu.Item as={Link} to="/signup" style={enterMenuStyle()}>
+            Sign Up
+          </Menu.Item>
+          <Menu.Item
+            header
+            style={logoutMenuStyle()}
+          >{`Hi ${getUserName()}`}</Menu.Item>
+          <Menu.Item
+            as={Link}
+            to="/"
+            style={logoutMenuStyle()}
+            onClick={logout}
+          >
+            Logout
+          </Menu.Item>
+          <Menu.Item as={Link} to="/cart">
+            <Icon name="shopping cart" size="small"></Icon>
+          </Menu.Item>
         </Menu.Menu>
       </Container>
     </Menu>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

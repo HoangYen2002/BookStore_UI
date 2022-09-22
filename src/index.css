@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.all_cart{
+  display: grid;
+  grid-template-columns: 40% 60%;
+}
+.img_item_cart{
+  height: 250px;
+  width: 80%;
+}
+.Header_item_cart{
+  font-size: 50px;
+  margin-top: 30px;
+}

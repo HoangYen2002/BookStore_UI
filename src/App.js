@@ -1,13 +1,14 @@
-import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { AuthProvider } from './components/context/AuthContext'
-import PrivateRoute from './components/misc/PrivateRoute'
-import Navbar from './components/misc/Navbar'
-import Home from './components/home/Home'
-import Login from './components/home/Login'
-import Signup from './components/home/Signup'
-import AdminPage from './components/admin/AdminPage'
-import UserPage from './components/user/UserPage'
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { AuthProvider } from "./components/context/AuthContext";
+import PrivateRoute from "./components/misc/PrivateRoute";
+import Navbar from "./components/misc/Navbar";
+import Home from "./components/home/Home";
+import Login from "./components/home/Login";
+import Signup from "./components/home/Signup";
+import AdminPage from "./components/admin/AdminPage";
+import UserPage from "./components/user/UserPage";
+import Cart from "./components/user/Cart";
 
 function App() {
   //thuộc tính exact dùng để nói rằng khi truy cập đúng 100% đường dẫn khai báo thì nó mới vào
@@ -17,14 +18,15 @@ function App() {
     <AuthProvider>
       <Router>
         <Navbar />
-        <Route path='/' exact component={Home} />
-        <Route path='/login' component={Login} />
-        <Route path='/signup' component={Signup} />
-        <PrivateRoute path='/adminpage' component={AdminPage} />
-        <PrivateRoute path='/userpage' component={UserPage} />
+        <Route path="/" exact component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <PrivateRoute path="/adminpage" component={AdminPage} />
+        <PrivateRoute path="/userpage" component={UserPage} />
+        <PrivateRoute path="/cart" component={Cart} />
       </Router>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
