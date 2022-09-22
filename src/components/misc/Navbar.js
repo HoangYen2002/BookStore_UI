@@ -11,7 +11,12 @@ function Navbar() {
   const logout = () => {
     userLogout(); //nếu chạy dòng này nó sẽ gọi qua phương thức userLogout() của AuthContext
   };
-
+  const CartStyle = () => {
+    const user = getUser();
+    return user && user.role === "ADMIN"
+      ? { display: "none" }
+      : { display: "block" };
+  };
   const enterMenuStyle = () => {
     return userIsAuthenticated() ? { display: "none" } : { display: "block" };
   };
@@ -79,7 +84,7 @@ function Navbar() {
           >
             Logout
           </Menu.Item>
-          <Menu.Item as={Link} to="/cart">
+          <Menu.Item as={Link} to="/cart" style={CartStyle()}>
             <Icon name="shopping cart" size="small"></Icon>
           </Menu.Item>
         </Menu.Menu>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Image, Item, Container } from "semantic-ui-react";
+
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -7,6 +8,7 @@ class Cart extends Component {
       cart: [],
     };
   }
+
   componentDidMount = () => {
     const datacart = localStorage.getItem("cart");
     let mang = JSON.parse(datacart);
