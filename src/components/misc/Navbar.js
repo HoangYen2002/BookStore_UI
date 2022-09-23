@@ -92,7 +92,7 @@ function Navbar() {
           <Menu.Item as={Link} to="/cart" style={CartStyle()}>
             <Icon name="shopping cart" size="small">
               <label className="quantityCart">
-                {quantityCarttt.quantityCart}
+                {quantityCarttt ? quantityCarttt.quantityCart : 0}
               </label>
             </Icon>
           </Menu.Item>

@@ -25,7 +25,17 @@ code {
 }
 .all_cart{
   display: grid;
-  grid-template-columns: 40% 60%;
+  grid-template-columns: 40% 40% 20%;
+}
+.remove_item_cart{
+  background-color: red;
+  height: 70px;
+  width: 70px;
+  cursor: pointer;
+  position: relative;
+  left: 100px;
+  top: 60px;
+  
 }
 .img_item_cart{
   height: 250px;

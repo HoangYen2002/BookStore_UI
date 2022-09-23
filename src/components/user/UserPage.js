@@ -95,6 +95,7 @@ export default class UserPage extends Component {
     bookApi
       .getBooks(user)
       .then((response) => {
+        console.log(response.data);
         this.setState({ books: response.data });
       })
       .catch((error) => {

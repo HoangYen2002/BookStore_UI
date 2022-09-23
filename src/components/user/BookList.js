@@ -50,9 +50,7 @@ function BookList({
           <Item.Content>
             <Item.Header>{book.title}</Item.Header>
             <Item.Meta>{book.isbn}</Item.Meta>
-            <Item.Description>
-              <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png" />
-            </Item.Description>
+            <Item.Meta>Price{book.price}VND</Item.Meta>
           </Item.Content>
           <Button onClick={handleaddToCartProcess}>ADD TO CART</Button>
         </Item>
