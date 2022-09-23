@@ -4,9 +4,8 @@ import { Container } from "semantic-ui-react";
 import BookList from "./BookList";
 import AuthContext from "../context/AuthContext";
 import { bookApi } from "../misc/BookApi";
-import { handleLogError } from "../misc/Helpers";
 
-class UserPage extends Component {
+export default class UserPage extends Component {
   static contextType = AuthContext;
 
   state = {
@@ -15,10 +14,12 @@ class UserPage extends Component {
     bookTextSearch: "",
     isUser: true,
     isBooksLoading: false,
+    quantityCart: 0,
   };
 
   componentDidMount() {
     let data_string_manggiohang = localStorage.getItem("cart");
+
     if (
       data_string_manggiohang &&
       data_string_manggiohang !== "undefined" &&
@@ -30,6 +31,7 @@ class UserPage extends Component {
         return pre;
       });
     }
+
     const Auth = this.context;
     const user = Auth.getUser();
     const isUser = user.role === "USER";
@@ -37,11 +39,23 @@ class UserPage extends Component {
 
     this.handleGetBooks();
   }
+
   saveLocalstorate = (arr_cart) => {
     let data_save = JSON.stringify(arr_cart);
     localStorage.setItem("cart", data_save);
-    console.log(data_save);
   };
+
+  handleAllItemCart(mang) {
+    var tong = 0;
+    for (var i = 0; i < mang.length; i++) {
+      tong += mang[i].quantity;
+    }
+    this.setState((prevState) => {
+      prevState.quantityCart = tong;
+      return prevState;
+    });
+    // connect(null, this.dispatchh);
+  }
   handleAddToCard = (item) => {
     let mang = this.state.cart;
     if (mang) {
@@ -66,6 +80,7 @@ class UserPage extends Component {
     });
 
     this.saveLocalstorate(mang);
+    this.handleAllItemCart(mang);
   };
 
   handleInputChange = (e, { name, value }) => {
@@ -83,7 +98,7 @@ class UserPage extends Component {
         this.setState({ books: response.data });
       })
       .catch((error) => {
-        handleLogError(error);
+        // handleLogError(error);
       })
       .finally(() => {
         this.setState({ isBooksLoading: false });
@@ -102,7 +117,7 @@ class UserPage extends Component {
         this.setState({ books });
       })
       .catch((error) => {
-        handleLogError(error);
+        //  handleLogError(error);
         this.setState({ books: [] });
       });
   };
@@ -115,6 +130,7 @@ class UserPage extends Component {
       return (
         <Container>
           <BookList
+            quantityCartt={this.state.quantityCart}
             handleAddToCard={this.handleAddToCard}
             cart={this.state.cart}
             isBooksLoading={isBooksLoading}
@@ -128,5 +144,3 @@ class UserPage extends Component {
     }
   }
 }
-
-export default UserPage;

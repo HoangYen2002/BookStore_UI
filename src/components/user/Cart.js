@@ -32,7 +32,7 @@ class Cart extends Component {
                   rounded
                 />
                 <Item.Content>
-                  <Item.Header className="Header_item_cart">
+                  <Item.Header className="Header_item_cart1">
                     {book.title}
                   </Item.Header>
                   <Item.Meta className="Header_item_cart">
@@ -46,6 +46,7 @@ class Cart extends Component {
             </>
           );
         })}
+        <Item className="Header_item_cart">Tổng Tiền là:</Item>
       </Container>
     );
   }

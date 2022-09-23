@@ -10,8 +10,10 @@ import {
   Segment,
   Button,
 } from "semantic-ui-react";
-
+import { useDispatch } from "react-redux";
+import { quantityCart } from "../reducers/action";
 function BookList({
+  quantityCartt,
   isBooksLoading,
   bookTextSearch,
   books,
@@ -20,13 +22,23 @@ function BookList({
   handleAddToCard,
 }) {
   let bookList;
+  const dispatch = useDispatch();
+  const dispatchh = () => {
+    dispatch(
+      quantityCart({
+        quantityCart: quantityCartt,
+      })
+    );
+  };
   if (books.length === 0) {
     bookList = <Item key="no-book">No book</Item>;
   } else {
     bookList = books.map((book) => {
       const handleaddToCartProcess = () => {
         handleAddToCard(book);
+        dispatchh();
       };
+
       return (
         <Item key={book.isbn}>
           <Image

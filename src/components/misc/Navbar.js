@@ -1,16 +1,21 @@
-import React from "react";
+import { React, useState } from "react";
+
 import { Link } from "react-router-dom";
 import { Container, Menu, Icon } from "semantic-ui-react";
 import { useAuth } from "../context/AuthContext"; //chỗ này import từ export phương thức useAuth() của AuthContext -->chạy vào useAuth()
+import { useSelector } from "react-redux";
 
 //thứ tự các phương thức sẽ luôn được gọi trong 1 class component hoặc function component -->Constuctor > render/return > componentDidMount
 function Navbar() {
   //Constructor sẽ luôn được chạy đầu tiên
   const { getUser, userIsAuthenticated, userLogout } = useAuth();
 
+  const quantityCarttt = useSelector((state) => state.quantityCart);
+
   const logout = () => {
     userLogout(); //nếu chạy dòng này nó sẽ gọi qua phương thức userLogout() của AuthContext
   };
+
   const CartStyle = () => {
     const user = getUser();
     return user && user.role === "ADMIN"
@@ -85,7 +90,11 @@ function Navbar() {
             Logout
           </Menu.Item>
           <Menu.Item as={Link} to="/cart" style={CartStyle()}>
-            <Icon name="shopping cart" size="small"></Icon>
+            <Icon name="shopping cart" size="small">
+              <label className="quantityCart">
+                {quantityCarttt.quantityCart}
+              </label>
+            </Icon>
           </Menu.Item>
         </Menu.Menu>
       </Container>
