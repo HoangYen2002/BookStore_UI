@@ -20,16 +20,19 @@ function BookList({
   handleInputChange,
   handleSearchBook,
   handleAddToCard,
+  cart,
 }) {
   let bookList;
   const dispatch = useDispatch();
+
   const dispatchh = () => {
     dispatch(
       quantityCart({
-        quantityCart: quantityCartt,
+        quantityCartt: quantityCartt,
       })
     );
   };
+
   if (books.length === 0) {
     bookList = <Item key="no-book">No book</Item>;
   } else {

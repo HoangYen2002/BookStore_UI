@@ -52,3 +52,19 @@ code {
 
   line-height:normal
 }
+.link_icon_cart{
+  color: #000;
+}
+.link_icon_cart:hover{
+  color: #000;
+}
+.button_quay_lai{
+  padding: 5px;
+}
+.button_quay_lai:hover{
+  opacity: 0.8;
+  background-color: aquamarine;
+}
+.Cart_emty{
+  text-align: center;
+}

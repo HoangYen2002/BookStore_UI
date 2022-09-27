@@ -15,9 +15,7 @@ class AuthProvider extends Component {
   getUser = () => {
     return JSON.parse(localStorage.getItem("user"));
   };
-  getQuantity = () => {
-    return localStorage.getItem("quantity_cart");
-  };
+
   userIsAuthenticated = () => {
     return localStorage.getItem("user") !== null;
   };

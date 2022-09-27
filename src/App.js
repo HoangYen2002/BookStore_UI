@@ -9,6 +9,7 @@ import Signup from "./components/home/Signup";
 import AdminPage from "./components/admin/AdminPage";
 import UserPage from "./components/user/UserPage";
 import Cart from "./components/user/Cart";
+import Checkout from "./components/user/Checkout";
 
 function App() {
   //thuộc tính exact dùng để nói rằng khi truy cập đúng 100% đường dẫn khai báo thì nó mới vào
@@ -24,6 +25,7 @@ function App() {
         <PrivateRoute path="/adminpage" component={AdminPage} />
         <PrivateRoute path="/userpage" component={UserPage} />
         <PrivateRoute path="/cart" component={Cart} />
+        <PrivateRoute path="/checkout" component={Checkout} />
       </Router>
     </AuthProvider>
   );

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 
 import { Link } from "react-router-dom";
 import { Container, Menu, Icon } from "semantic-ui-react";
@@ -10,7 +10,7 @@ function Navbar() {
   //Constructor sẽ luôn được chạy đầu tiên
   const { getUser, userIsAuthenticated, userLogout } = useAuth();
 
-  const quantityCarttt = useSelector((state) => state.quantityCart);
+  const quantityCarttt = useSelector((state) => state.quantityCartt + 1);
 
   const logout = () => {
     userLogout(); //nếu chạy dòng này nó sẽ gọi qua phương thức userLogout() của AuthContext
@@ -92,7 +92,7 @@ function Navbar() {
           <Menu.Item as={Link} to="/cart" style={CartStyle()}>
             <Icon name="shopping cart" size="small">
               <label className="quantityCart">
-                {quantityCarttt ? quantityCarttt.quantityCart : 0}
+                {quantityCarttt ? quantityCarttt : 0}
               </label>
             </Icon>
           </Menu.Item>

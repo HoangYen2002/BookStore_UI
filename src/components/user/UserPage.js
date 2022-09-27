@@ -47,15 +47,17 @@ export default class UserPage extends Component {
 
   handleAllItemCart(mang) {
     var tong = 0;
+
     for (var i = 0; i < mang.length; i++) {
       tong += mang[i].quantity;
     }
-    this.setState((prevState) => {
-      prevState.quantityCart = tong;
-      return prevState;
-    });
-    // connect(null, this.dispatchh);
+    console.log("tongg" + tong);
+
+    this.setState({ quantityCart: tong }, () =>
+      console.log("tongg" + this.state.quantityCart)
+    );
   }
+
   handleAddToCard = (item) => {
     let mang = this.state.cart;
     if (mang) {
@@ -81,6 +83,7 @@ export default class UserPage extends Component {
 
     this.saveLocalstorate(mang);
     this.handleAllItemCart(mang);
+    console.log("tongggg" + this.state.quantityCart);
   };
 
   handleInputChange = (e, { name, value }) => {
@@ -95,7 +98,6 @@ export default class UserPage extends Component {
     bookApi
       .getBooks(user)
       .then((response) => {
-        console.log(response.data);
         this.setState({ books: response.data });
       })
       .catch((error) => {
