@@ -1,8 +1,15 @@
 import React from "react";
-import { Button, Form, Grid, Segment, Message } from "semantic-ui-react";
-import { NavLink, Redirect } from "react-router-dom";
+import { Button, Form, Grid, Segment, Item, Image } from "semantic-ui-react";
+import { useEffect } from "react";
+import { useState } from "react";
 
-export default function Checkout({}) {
+export default function Checkout() {
+  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    const datacart = localStorage.getItem("cart");
+    let mang = JSON.parse(datacart);
+    setCart(mang);
+  }, []);
   return (
     <div>
       <Grid textAlign="center">
@@ -44,6 +51,31 @@ export default function Checkout({}) {
               </Button>
             </Segment>
           </Form>
+        </Grid.Column>
+      </Grid>
+      {/* asdasdasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssd */}
+      <Grid textAlign="center">
+        <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
+          {cart.map((item) => {
+            return (
+              <Item.Group>
+                <Item key={item.isbn}>
+                  <Image
+                    src={`http://covers.openlibrary.org/b/isbn/${item.isbn}-M.jpg`}
+                    size="tiny"
+                    bordered
+                    rounded
+                  />
+                  <Item.Content>
+                    <Item.Header>{item.title}</Item.Header>
+                    <Item.Meta>{item.isbn}</Item.Meta>
+                    <Item.Meta>Quantity: {item.quantity}</Item.Meta>
+                    <Item.Meta>Price: {item.price}VND</Item.Meta>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            );
+          })}
         </Grid.Column>
       </Grid>
     </div>

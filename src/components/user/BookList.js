@@ -53,7 +53,7 @@ function BookList({
           <Item.Content>
             <Item.Header>{book.title}</Item.Header>
             <Item.Meta>{book.isbn}</Item.Meta>
-            <Item.Meta>Price{book.price}VND</Item.Meta>
+            <Item.Meta>Price: {book.price}VND</Item.Meta>
           </Item.Content>
           <Button onClick={handleaddToCartProcess}>ADD TO CART</Button>
         </Item>
