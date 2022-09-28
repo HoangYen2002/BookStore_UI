@@ -33,6 +33,48 @@ class Cart extends Component {
     this.saveLocalstorate(mang);
   };
 
+  handleTangSoLuong = (item) => {
+    let mang = this.state.cart;
+    for (var i = 0; i < mang.length; i++) {
+      if (mang[i].isbn === item.isbn) {
+        if (mang[i].quantity > 1) {
+          mang[i].quantity += 1;
+        } else {
+        }
+      }
+    }
+    this.setState((prevState) => {
+      prevState.cart = mang;
+      prevState.quantityCart = this.state.quantityCart + 1;
+      return prevState;
+    });
+    this.saveLocalstorate(mang);
+    this.handleSum(mang);
+  };
+  handlegiamSoLuong = (item) => {
+    let mang = this.state.cart;
+    for (var i = 0; i < mang.length; i++) {
+      if (mang[i].isbn === item.isbn) {
+        if (mang[i].quantity > 1) {
+          mang[i].quantity -= 1;
+        } else {
+          this.handleRemoveItemCart(item);
+          this.setState((prevState) => {
+            prevState.quantityCart = this.state.quantityCart;
+            return prevState;
+          });
+        }
+      }
+    }
+    this.setState((prevState) => {
+      prevState.cart = mang;
+      prevState.quantityCart = this.state.quantityCart - 1;
+      return prevState;
+    });
+    this.saveLocalstorate(mang);
+    this.handleSum(mang);
+  };
+
   handleSum = (mang) => {
     var Sum = 0;
     for (var i = 0; i < mang.length; i++) {
@@ -43,6 +85,16 @@ class Cart extends Component {
       return pre;
     });
   };
+  handleQuantityCart = (mang) => {
+    var quantitycartt = this.state.quantityCart;
+    for (var i = 0; i < mang.length; i++) {
+      quantitycartt += mang[i].quantity;
+    }
+
+    this.setState({ quantityCart: quantitycartt }, () =>
+      this.setState({ quantityCart: this.state.quantityCart })
+    );
+  };
   componentDidMount = () => {
     const datacart = localStorage.getItem("cart");
     let mang = JSON.parse(datacart);
@@ -51,7 +103,7 @@ class Cart extends Component {
       pre.cart = mang;
       return pre;
     });
-
+    this.handleQuantityCart(mang);
     this.handleSum(mang);
   };
   render() {
@@ -75,7 +127,7 @@ class Cart extends Component {
           </Container>
         ) : (
           <Container>
-            <h1>My Cart </h1>
+            <h1>My Cart {this.state.quantityCart} </h1>
             {this.state.cart.map((book) => {
               return (
                 <>
@@ -83,6 +135,8 @@ class Cart extends Component {
                     <div key={book.isbn}>haha</div>
                   ) : (
                     <ItemCart
+                      handleTangSoLuong={this.handleTangSoLuong}
+                      handlegiamSoLuong={this.handlegiamSoLuong}
                       key={book.isbn}
                       handleRemoveItemCart={this.handleRemoveItemCart}
                       book={book}

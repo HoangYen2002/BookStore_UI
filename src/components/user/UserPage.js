@@ -51,7 +51,6 @@ export default class UserPage extends Component {
     for (var i = 0; i < mang.length; i++) {
       tong += mang[i].quantity;
     }
-    console.log("tongg" + tong);
 
     this.setState({ quantityCart: tong }, () =>
       console.log("tongg" + this.state.quantityCart)
@@ -83,7 +82,6 @@ export default class UserPage extends Component {
 
     this.saveLocalstorate(mang);
     this.handleAllItemCart(mang);
-    console.log("tongggg" + this.state.quantityCart);
   };
 
   handleInputChange = (e, { name, value }) => {

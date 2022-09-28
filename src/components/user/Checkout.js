@@ -5,11 +5,21 @@ import { useState } from "react";
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
+  const [sum, setSum] = useState();
   useEffect(() => {
     const datacart = localStorage.getItem("cart");
     let mang = JSON.parse(datacart);
     setCart(mang);
+    handleSum(mang);
   }, []);
+
+  const handleSum = (mang) => {
+    var Sum = 0;
+    for (var i = 0; i < mang.length; i++) {
+      Sum += mang[i].price * mang[i].quantity;
+    }
+    setSum(Sum);
+  };
   return (
     <div>
       <Grid textAlign="center">
@@ -76,6 +86,7 @@ export default function Checkout() {
               </Item.Group>
             );
           })}
+          <div>Price all:{sum}</div>
         </Grid.Column>
       </Grid>
     </div>
