@@ -1,16 +1,26 @@
 import React from "react";
+
 import { Button, Form, Grid, Segment, Item, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { bookApi } from "../misc/BookApi";
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
+  const [customerName, setcustomerName] = useState();
+  const [customerPhone, setcustomerPhone] = useState();
+  const [customerEmail, setcustomerEmail] = useState();
+  const [customerAddress, setcustomerAddress] = useState();
   const [sum, setSum] = useState();
+  const [orderDetail, setorderDetail] = useState([]);
+  const [isBooksLoading, setisBooksLoading] = useState(false);
+
   useEffect(() => {
     const datacart = localStorage.getItem("cart");
     let mang = JSON.parse(datacart);
     setCart(mang);
     handleSum(mang);
+    setOrderDetaill(mang);
   }, []);
 
   const handleSum = (mang) => {
@@ -20,43 +30,103 @@ export default function Checkout() {
     }
     setSum(Sum);
   };
+  const setOrderDetaill = (mang) => {
+    var mangOrderDetail = [];
+
+    mangOrderDetail = mang;
+
+    setorderDetail(mangOrderDetail);
+  };
+  const handleOnChange = (e) => {
+    if (e.target.name === "customerName") {
+      setcustomerName(e.target.value);
+    } else if (e.target.name === "customerPhone") {
+      setcustomerPhone(e.target.value);
+    } else if (e.target.name === "customerEmail") {
+      setcustomerEmail(e.target.value);
+    } else if (e.target.name === "customerAddress") {
+      setcustomerAddress(e.target.value);
+    }
+  };
+  const handleSubmitForm = () => {
+    var user = JSON.parse(localStorage.getItem("user"));
+    //api custumer
+    setisBooksLoading(true);
+    bookApi
+      .addOrder(user, {
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerEmail: customerEmail,
+        customerAddress: customerAddress,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // handleLogError(error);
+      })
+      .finally(() => {});
+
+    //api detail
+
+    bookApi
+      .addDetail(user, cart)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // handleLogError(error);
+      })
+      .finally(() => {
+        setisBooksLoading(false);
+      });
+  };
   return (
-    <div>
+    <Segment>
       <Grid textAlign="center">
         <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
           <Form size="large">
-            <Segment>
+            <Segment loading={isBooksLoading}>
               <Form.Input
                 fluid
                 autoFocus
-                name="name"
+                name="customerName"
                 icon="user"
                 iconPosition="left"
                 placeholder="Full Name"
+                onChange={handleOnChange}
               />
               <Form.Input
                 fluid
-                name="phone"
+                name="customerPhone"
                 icon="phone"
                 iconPosition="left"
                 placeholder="Numberphone"
                 type="number"
+                onChange={handleOnChange}
               />
               <Form.Input
                 fluid
-                name="address"
+                name="customerAddress"
                 icon="address card"
                 iconPosition="left"
                 placeholder="Address"
+                onChange={handleOnChange}
               />
               <Form.Input
                 fluid
-                name="email"
+                name="customerEmail"
                 icon="at"
                 iconPosition="left"
                 placeholder="Email"
+                onChange={handleOnChange}
               />
-              <Button color="blue" fluid size="large">
+              <Button
+                onClick={handleSubmitForm}
+                color="blue"
+                fluid
+                size="large"
+              >
                 Gửi
               </Button>
             </Segment>
@@ -89,6 +159,6 @@ export default function Checkout() {
           <div>Price all:{sum}</div>
         </Grid.Column>
       </Grid>
-    </div>
+    </Segment>
   );
 }
