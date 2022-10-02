@@ -14,15 +14,22 @@ export default function Checkout() {
   const [sum, setSum] = useState();
   const [orderDetail, setorderDetail] = useState([]);
   const [isBooksLoading, setisBooksLoading] = useState(false);
+  const [nameuser, setnameuser] = useState("");
+  const [emailuser, setemailuser] = useState("");
 
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
     const datacart = localStorage.getItem("cart");
+    handletotalQuantity();
+    setnameuser(user.name);
+    setemailuser(user.email);
     let mang = JSON.parse(datacart);
     setCart(mang);
     handleSum(mang);
     setOrderDetaill(mang);
   }, []);
 
+  const handletotalQuantity = () => {};
   const handleSum = (mang) => {
     var Sum = 0;
     for (var i = 0; i < mang.length; i++) {
@@ -50,32 +57,34 @@ export default function Checkout() {
   };
   const handleSubmitForm = () => {
     var user = JSON.parse(localStorage.getItem("user"));
+    let allQuantity = 0;
+    for (let i = 0; i < cart.length; i++) {
+      allQuantity += cart[i].quantity;
+    }
+    console.log(cart);
+    handletotalQuantity();
+    let mycart = {
+      totalAmount: sum,
+      totalQuantity: allQuantity,
+      username: nameuser,
+      books: cart,
+      phone: customerPhone,
+      address: customerAddress,
+      email: emailuser,
+    };
+
     //api custumer
     setisBooksLoading(true);
-    bookApi
-      .addOrder(user, {
-        customerName: customerName,
-        customerPhone: customerPhone,
-        customerEmail: customerEmail,
-        customerAddress: customerAddress,
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // handleLogError(error);
-      })
-      .finally(() => {});
 
     //api detail
 
     bookApi
-      .addDetail(user, cart)
+      .addDetail(user, mycart)
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
       })
       .catch((error) => {
-        // handleLogError(error);
+        //   handleLogError(error);
       })
       .finally(() => {
         setisBooksLoading(false);
@@ -88,13 +97,15 @@ export default function Checkout() {
           <Form size="large">
             <Segment loading={isBooksLoading}>
               <Form.Input
+                readOnly
                 fluid
+                block
                 autoFocus
                 name="customerName"
                 icon="user"
                 iconPosition="left"
                 placeholder="Full Name"
-                onChange={handleOnChange}
+                value={nameuser}
               />
               <Form.Input
                 fluid
@@ -115,11 +126,12 @@ export default function Checkout() {
               />
               <Form.Input
                 fluid
+                readOnly
                 name="customerEmail"
                 icon="at"
                 iconPosition="left"
                 placeholder="Email"
-                onChange={handleOnChange}
+                value={emailuser}
               />
               <Button
                 onClick={handleSubmitForm}

@@ -49,6 +49,7 @@ function ItemCart({
           <button onClick={processhandleTangSoLuong}>+</button>
         </Item.Meta>
         <Item.Meta className="Header_item_cart">Price:{book.price}</Item.Meta>
+        <Item.Meta className="Header_item_cart">Amount:{book.amount}</Item.Meta>
       </Item.Content>
       <button onClick={processRemoveItemCart} className="remove_item_cart">
         <Icon name="trash alternate"></Icon>

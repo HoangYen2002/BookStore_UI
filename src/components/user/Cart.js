@@ -37,8 +37,9 @@ class Cart extends Component {
     let mang = this.state.cart;
     for (var i = 0; i < mang.length; i++) {
       if (mang[i].isbn === item.isbn) {
-        if (mang[i].quantity > 1) {
+        if (mang[i].quantity >= 1) {
           mang[i].quantity += 1;
+          mang[i].amount = item.price * item.quantity;
         } else {
         }
       }
@@ -57,6 +58,7 @@ class Cart extends Component {
       if (mang[i].isbn === item.isbn) {
         if (mang[i].quantity > 1) {
           mang[i].quantity -= 1;
+          mang[i].amount = item.price * item.quantity;
         } else {
           this.handleRemoveItemCart(item);
           this.setState((prevState) => {
@@ -98,6 +100,7 @@ class Cart extends Component {
   componentDidMount = () => {
     const datacart = localStorage.getItem("cart");
     let mang = JSON.parse(datacart);
+    console.log(mang);
 
     this.setState((pre) => {
       pre.cart = mang;

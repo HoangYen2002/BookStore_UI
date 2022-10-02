@@ -1,5 +1,4 @@
 const rootReducers = (state = 0, action) => {
-  console.log({ state, action });
   switch (action.type) {
     case "quantityCart":
       return {

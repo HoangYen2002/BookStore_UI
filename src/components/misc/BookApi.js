@@ -11,7 +11,6 @@ export const bookApi = {
   getBooks,
   deleteBook,
   addBook,
-  addOrder,
   addDetail,
 };
 
@@ -73,17 +72,10 @@ function addBook(user, book) {
     },
   });
 }
-function addOrder(user, order) {
-  return instance.post("/api/order", order, {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: basicAuth(user),
-    },
-  });
-}
 
 function addDetail(user, detail) {
-  return instance.post("/api/detail", detail, {
+  console.log(detail);
+  return instance.post("/api/order/checkout", detail, {
     headers: {
       "Content-type": "application/json",
       Authorization: basicAuth(user),

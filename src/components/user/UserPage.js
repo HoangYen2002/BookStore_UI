@@ -52,23 +52,25 @@ export default class UserPage extends Component {
       tong += mang[i].quantity;
     }
 
-    this.setState({ quantityCart: tong }, () =>
-      console.log("tongg" + this.state.quantityCart)
-    );
+    this.setState({ quantityCart: tong });
   }
 
   handleAddToCard = (item) => {
-    let mang = this.state.cart;
+    let arr = this.state.cart;
+    const mang = Array.from(arr);
     if (mang) {
       let flag = 0;
       for (var i = 0; i < mang.length; i++) {
         if (mang[i].isbn === item.isbn) {
           mang[i].quantity += 1;
+          mang[i].amount = item.price * item.quantity;
+
           flag = 1;
         }
       }
       if (flag === 0) {
         item.quantity = 1;
+        item.amount = item.price * 1;
         mang.push(item);
       }
     } else {

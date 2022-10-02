@@ -1,5 +1,4 @@
 export const quantityCart = (data) => {
-  console.log(data);
   return {
     type: "quantityCart",
     payload: data.quantityCartt,
