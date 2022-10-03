@@ -70,6 +70,9 @@ function Navbar() {
         <Menu.Item as={Link} to="/userpage" style={userPageStyle()}>
           UserPage
         </Menu.Item>
+        <Menu.Item as={Link} to="/detail" style={adminPageStyle()}>
+          Order
+        </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>
             Login

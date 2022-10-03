@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Redirect } from "react-router-dom";
 import { Button, Form, Grid, Segment, Item, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -55,6 +55,12 @@ export default function Checkout() {
       setcustomerAddress(e.target.value);
     }
   };
+
+  const saveLocalstorate = (arr_cart) => {
+    let data_save = JSON.stringify(arr_cart);
+    localStorage.setItem("cart", data_save);
+  };
+
   const handleSubmitForm = () => {
     var user = JSON.parse(localStorage.getItem("user"));
     let allQuantity = 0;
@@ -81,13 +87,17 @@ export default function Checkout() {
     bookApi
       .addDetail(user, mycart)
       .then((response) => {
-        console.log(response);
+        alert("Complete Request");
+        setCart([]);
+        saveLocalstorate([]);
+        setSum(0);
       })
       .catch((error) => {
         //   handleLogError(error);
       })
       .finally(() => {
         setisBooksLoading(false);
+        return <Redirect to="/" />;
       });
   };
   return (
