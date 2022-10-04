@@ -7,9 +7,7 @@ import { bookApi } from "../misc/BookApi";
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
-  const [customerName, setcustomerName] = useState();
   const [customerPhone, setcustomerPhone] = useState();
-  const [customerEmail, setcustomerEmail] = useState();
   const [customerAddress, setcustomerAddress] = useState();
   const [sum, setSum] = useState();
   const [orderDetail, setorderDetail] = useState([]);
@@ -22,6 +20,7 @@ export default function Checkout() {
     const datacart = localStorage.getItem("cart");
     handletotalQuantity();
     setnameuser(user.name);
+    console.log(user);
     setemailuser(user.email);
     let mang = JSON.parse(datacart);
     setCart(mang);
@@ -45,12 +44,8 @@ export default function Checkout() {
     setorderDetail(mangOrderDetail);
   };
   const handleOnChange = (e) => {
-    if (e.target.name === "customerName") {
-      setcustomerName(e.target.value);
-    } else if (e.target.name === "customerPhone") {
+    if (e.target.name === "customerPhone") {
       setcustomerPhone(e.target.value);
-    } else if (e.target.name === "customerEmail") {
-      setcustomerEmail(e.target.value);
     } else if (e.target.name === "customerAddress") {
       setcustomerAddress(e.target.value);
     }
