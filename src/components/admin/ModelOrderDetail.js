@@ -1,40 +1,17 @@
 import React from "react";
-import { Icon, Button, Table, Image } from "semantic-ui-react";
-import { bookApi } from "../misc/BookApi";
+import { Table } from "semantic-ui-react";
+
+import { useEffect } from "react";
+import ModelPopup from "./ModelPopup";
 export default function ModelOrderDetail({ item }) {
   const [orderDetailList, setOrderDetailList] = React.useState([]);
 
-  async function handleGetOrderDetails() {
+  const [user, setuser] = React.useState([]);
+  useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
-    let response = await bookApi
-      .getOrderDetail(user, item.id)
-      .then((response) => {
-        console.log(response.data);
-      });
-
-    if (response != "") {
-      let list = response.data.map((orderDetail) => {
-        return (
-          <Table.Row key={orderDetail.id}>
-            <Table.Cell>
-              <Image
-                src={`http://covers.openlibrary.org/b/isbn/${orderDetail.book.isbn}-M.jpg`}
-                size="tiny"
-                bordered
-                rounded
-              />
-            </Table.Cell>
-            <Table.Cell>{orderDetail.book.isbn}</Table.Cell>
-            <Table.Cell>{orderDetail.book.title}</Table.Cell>
-            <Table.Cell>{orderDetail.book.price}</Table.Cell>
-            <Table.Cell>{orderDetail.quantity}</Table.Cell>
-            <Table.Cell>{orderDetail.amount}</Table.Cell>
-          </Table.Row>
-        );
-      });
-      setOrderDetailList(list);
-    }
-  }
+    console.log(user);
+    setuser(user);
+  }, []);
 
   return (
     <Table.Row key={item.id}>
@@ -44,14 +21,7 @@ export default function ModelOrderDetail({ item }) {
       <Table.Cell>{item.totalQuantity}</Table.Cell>
       <Table.Cell>{item.amount}</Table.Cell>
       <Table.Cell>
-        <Button
-          circular
-          color="blue"
-          size="small"
-          onClick={handleGetOrderDetails}
-        >
-          View Details <Icon name="chevron right" />
-        </Button>
+        <ModelPopup orderId={item.id} user={user} />
       </Table.Cell>
     </Table.Row>
   );

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Item, Container, Button } from "semantic-ui-react";
+import { Item, Container, Button, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
 
@@ -111,53 +111,72 @@ class Cart extends Component {
   };
   render() {
     return (
-      <>
-        {this.state.Sum_Price === 0 ? (
-          <Container>
-            <div className="Cart_emty">
-              <div>
-                <img
-                  src="https://www.novelty.com.vn/assets/empty_cart.jpeg"
-                  alt=""
-                />
+      <Container>
+        {" "}
+        <Table compact striped selectable>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell width={2}>Image</Table.HeaderCell>
+              <Table.HeaderCell width={2}>ISBN</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Title</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Price</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Quantity</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Amount</Table.HeaderCell>
+              <Table.HeaderCell width={2}>Remove Item</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {" "}
+            {this.state.Sum_Price === 0 ? (
+              <div className="Cart_emty">
+                <div>
+                  <img
+                    src="https://www.novelty.com.vn/assets/empty_cart.jpeg"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <Link className="link_icon_cart" to={"/userpage"}>
+                    <button className="button_quay_lai">
+                      Tiếp Tục Mua Hàng
+                    </button>
+                  </Link>
+                </div>
               </div>
-              <div>
-                <Link className="link_icon_cart" to={"/userpage"}>
-                  <button className="button_quay_lai">Tiếp Tục Mua Hàng</button>
-                </Link>
-              </div>
-            </div>
-          </Container>
-        ) : (
-          <Container>
-            <h1>My Cart {this.state.quantityCart} </h1>
-            {this.state.cart.map((book) => {
-              return (
-                <>
-                  {this.state.cart.length === 0 ? (
-                    <div key={book.isbn}>haha</div>
-                  ) : (
-                    <ItemCart
-                      handleTangSoLuong={this.handleTangSoLuong}
-                      handlegiamSoLuong={this.handlegiamSoLuong}
-                      key={book.isbn}
-                      handleRemoveItemCart={this.handleRemoveItemCart}
-                      book={book}
-                    ></ItemCart>
-                  )}
-                </>
-              );
-            })}
-            <Item className="Header_item_cart">
-              Tổng Tiền là:{this.state.Sum_Price}
-            </Item>
-
-            <Item className="Header_item_cart">
-              <Button href="/checkout">mua</Button>
-            </Item>
-          </Container>
-        )}
-      </>
+            ) : (
+              <>
+                <h1>
+                  My Cart{" "}
+                  {this.state.quantityCart ? this.state.quantityCart : <></>}{" "}
+                </h1>
+                {this.state.cart.map((book) => {
+                  return (
+                    <>
+                      {this.state.cart.length === 0 ? (
+                        <div key={book.isbn}>haha</div>
+                      ) : (
+                        <ItemCart
+                          handleTangSoLuong={this.handleTangSoLuong}
+                          handlegiamSoLuong={this.handlegiamSoLuong}
+                          key={book.isbn}
+                          handleRemoveItemCart={this.handleRemoveItemCart}
+                          book={book}
+                        ></ItemCart>
+                      )}
+                    </>
+                  );
+                })}
+              </>
+            )}
+          </Table.Body>
+        </Table>
+        <div className="Header_item_cart">
+          Tổng Tiền là:{this.state.Sum_Price}
+        </div>
+        <Item className="Header_item_cart">
+          <Button href="/checkout">mua</Button>
+        </Item>
+      </Container>
     );
   }
 }

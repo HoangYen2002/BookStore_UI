@@ -10,6 +10,7 @@ import {
   Segment,
   Button,
 } from "semantic-ui-react";
+
 import { useDispatch } from "react-redux";
 import { quantityCart } from "../reducers/action";
 function BookList({
@@ -55,7 +56,10 @@ function BookList({
             <Item.Meta>{book.isbn}</Item.Meta>
             <Item.Meta>Price: {book.price}VND</Item.Meta>
           </Item.Content>
-          <Button onClick={handleaddToCartProcess}>ADD TO CART</Button>
+          <button className="buttonAddtoCart" onClick={handleaddToCartProcess}>
+            <Icon flipped="horizontally" size="small" name="add to cart" /> ADD
+            TO CART
+          </button>
         </Item>
       );
     });
