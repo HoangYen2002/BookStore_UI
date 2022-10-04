@@ -78,7 +78,6 @@ export default function Checkout() {
     setisBooksLoading(true);
 
     //api detail
-
     bookApi
       .addDetail(user, mycart)
       .then((response) => {

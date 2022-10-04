@@ -13,6 +13,7 @@ export const bookApi = {
   addBook,
   addDetail,
   getDetail,
+  getOrderDetail,
 };
 
 function authenticate(username, password) {
@@ -86,6 +87,16 @@ function addDetail(user, detail) {
 
 function getDetail(user) {
   return instance.get("/api/orders", {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: basicAuth(user),
+    },
+  });
+}
+
+function getOrderDetail(user, id) {
+  console.log(id);
+  return instance.get(`/api/orders/${id}`, {
     headers: {
       "Content-type": "application/json",
       Authorization: basicAuth(user),
