@@ -4,17 +4,14 @@ import { bookApi } from "../misc/BookApi";
 
 import {
   Item,
-  //  Image,
-  Button,
   Container,
   Grid,
   Header,
   Icon,
   Segment,
-  // Input,
-  // Form,
+  Table,
 } from "semantic-ui-react";
-import PageNotF from "../home/PageNotF";
+// import PageNotF from "../home/PageNotF";
 import ModelOrderDetail from "./ModelOrderDetail";
 function Detail() {
   const [order, setOrder] = useState([]);
@@ -35,22 +32,6 @@ function Detail() {
         .finally(() => {});
     }
   }, []);
-  const handleShowDetail = () => {};
-
-  const handleOnclikOrderDetail = () => {
-    let user = JSON.parse(localStorage.getItem("user"));
-
-    console.log(order);
-    bookApi
-      .getOrderDetail(user, order.id)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        //   handleLogError(error);
-      })
-      .finally(() => {});
-  };
 
   return (
     <div>
@@ -68,9 +49,23 @@ function Detail() {
             </Grid.Row>
           </Grid>
           <Item.Group divided unstackable relaxed link>
-            {order.map((item) => {
-              return <ModelOrderDetail item={item}></ModelOrderDetail>;
-            })}
+            <Table compact striped selectable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell width={2}>Order Num</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Order Date</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Name</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Total Quantity</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Total Amount</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>View Details</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {order.map((item) => {
+                  return <ModelOrderDetail item={item}></ModelOrderDetail>;
+                })}
+              </Table.Body>
+            </Table>
           </Item.Group>
         </Segment>
       </Container>

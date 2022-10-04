@@ -1,17 +1,5 @@
 import React from "react";
-import {
-  Item,
-  //  Image,
-  Button,
-  Table,
-  Image,
-  //   Grid,
-  //   Header,
-  //   Icon,
-  //   Segment,
-  // Input,
-  // Form,
-} from "semantic-ui-react";
+import { Icon, Button, Table, Image } from "semantic-ui-react";
 import { bookApi } from "../misc/BookApi";
 export default function ModelOrderDetail({ item }) {
   const [orderDetailList, setOrderDetailList] = React.useState([]);
@@ -49,14 +37,22 @@ export default function ModelOrderDetail({ item }) {
   }
 
   return (
-    <Item key={item.id}>
-      <Item.Content>
-        <Item.Header>Name: {item.name}</Item.Header>
-        <Item.Meta>Total Amount: {item.amount}</Item.Meta>
-        <Item.Meta>Date: {item.orderDate}</Item.Meta>
-        <Button onClick={handleGetOrderDetails}>View Detail</Button>
-        <Item.Meta>orderDetailList</Item.Meta>
-      </Item.Content>
-    </Item>
+    <Table.Row key={item.id}>
+      <Table.Cell>{item.orderNum}</Table.Cell>
+      <Table.Cell>{item.orderDate}</Table.Cell>
+      <Table.Cell>{item.name}</Table.Cell>
+      <Table.Cell>{item.totalQuantity}</Table.Cell>
+      <Table.Cell>{item.amount}</Table.Cell>
+      <Table.Cell>
+        <Button
+          circular
+          color="blue"
+          size="small"
+          onClick={handleGetOrderDetails}
+        >
+          View Details <Icon name="chevron right" />
+        </Button>
+      </Table.Cell>
+    </Table.Row>
   );
 }
