@@ -1,5 +1,5 @@
 import { React } from "react";
-
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Menu, Icon } from "semantic-ui-react";
 import { useAuth } from "../context/AuthContext"; //chỗ này import từ export phương thức useAuth() của AuthContext -->chạy vào useAuth()
@@ -7,8 +7,9 @@ import { useSelector } from "react-redux";
 
 //thứ tự các phương thức sẽ luôn được gọi trong 1 class component hoặc function component -->Constuctor > render/return > componentDidMount
 function Navbar() {
-  //Constructor sẽ luôn được chạy đầu tiên
   const { getUser, userIsAuthenticated, userLogout } = useAuth();
+  const [top, settop] = useState("block");
+  const [height, setheight] = useState(50);
 
   const quantityCarttt = useSelector((state) => state.quantityCartt + 1);
 
@@ -21,6 +22,20 @@ function Navbar() {
     return user && user.role === "ADMIN"
       ? { display: "none" }
       : { display: "block" };
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", isMouseDown);
+  }, []);
+  const isMouseDown = () => {
+    const scrollWindowHeight = window.pageYOffset;
+    // console.log(scrollWindowHeight);
+    if (scrollWindowHeight >= 10) {
+      settop("fixed");
+      setheight(30);
+    } else {
+      settop("relative");
+      setheight(50);
+    }
   };
   const enterMenuStyle = () => {
     return userIsAuthenticated() ? { display: "none" } : { display: "block" };
@@ -54,30 +69,55 @@ function Navbar() {
   return (
     <Menu
       inverted
-      color="blue"
+      className="navbar"
       stackable
       size="massive"
-      style={{ borderRadius: 0 }}
+      style={{ borderRadius: 0, position: top, height: height + "px" }}
     >
       <Container>
         <Menu.Item header>Book-UI</Menu.Item>
-        <Menu.Item as={Link} exact="true" to="/">
+        <Menu.Item className="item_nav" as={Link} exact="true" to="/">
           Home
         </Menu.Item>
-        <Menu.Item as={Link} to="/adminpage" style={adminPageStyle()}>
+        <Menu.Item
+          className="item_nav"
+          as={Link}
+          to="/adminpage"
+          style={adminPageStyle()}
+        >
           AdminPage
         </Menu.Item>
-        <Menu.Item as={Link} to="/userpage" style={userPageStyle()}>
+        <Menu.Item
+          className="item_nav"
+          as={Link}
+          to="/userpage"
+          style={userPageStyle()}
+        >
           UserPage
         </Menu.Item>
-        <Menu.Item as={Link} to="/detail" style={adminPageStyle()}>
+        <Menu.Item
+          className="item_nav"
+          as={Link}
+          to="/detail"
+          style={adminPageStyle()}
+        >
           Order
         </Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item as={Link} to="/login" style={enterMenuStyle()}>
+          <Menu.Item
+            className="item_nav"
+            as={Link}
+            to="/login"
+            style={enterMenuStyle()}
+          >
             Login
           </Menu.Item>
-          <Menu.Item as={Link} to="/signup" style={enterMenuStyle()}>
+          <Menu.Item
+            className="item_nav"
+            as={Link}
+            to="/signup"
+            style={enterMenuStyle()}
+          >
             Sign Up
           </Menu.Item>
           <Menu.Item
@@ -85,6 +125,7 @@ function Navbar() {
             style={logoutMenuStyle()}
           >{`Hi ${getUserName()}`}</Menu.Item>
           <Menu.Item
+            className="item_nav"
             as={Link}
             to="/"
             style={logoutMenuStyle()}
@@ -92,7 +133,12 @@ function Navbar() {
           >
             Logout
           </Menu.Item>
-          <Menu.Item as={Link} to="/cart" style={CartStyle()}>
+          <Menu.Item
+            className="item_nav"
+            as={Link}
+            to="/cart"
+            style={CartStyle()}
+          >
             <Icon name="shopping cart" size="small">
               <label className="quantityCart">
                 {quantityCarttt ? quantityCarttt : 0}

@@ -112,7 +112,10 @@ class Cart extends Component {
   render() {
     return (
       <Container>
-        {" "}
+        <h1>
+          My Cart
+          {this.state.quantityCart ? this.state.quantityCart : <></>}
+        </h1>
         <Table compact striped selectable>
           <Table.Header>
             <Table.Row>
@@ -145,10 +148,6 @@ class Cart extends Component {
               </div>
             ) : (
               <>
-                <h1>
-                  My Cart{" "}
-                  {this.state.quantityCart ? this.state.quantityCart : <></>}{" "}
-                </h1>
                 {this.state.cart.map((book) => {
                   return (
                     <>
@@ -171,10 +170,10 @@ class Cart extends Component {
           </Table.Body>
         </Table>
         <div className="Header_item_cart">
-          Tổng Tiền là:{this.state.Sum_Price}
+          Total Amount:{this.state.Sum_Price}
         </div>
         <Item className="Header_item_cart">
-          <Button href="/checkout">mua</Button>
+          <Button href="/checkout">Buy</Button>
         </Item>
       </Container>
     );

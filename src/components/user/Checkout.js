@@ -1,9 +1,10 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+
 import { Button, Form, Grid, Segment, Item, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { bookApi } from "../misc/BookApi";
+import { Redirect } from "react-router";
 
 export default function Checkout() {
   const [cart, setCart] = useState([]);
@@ -62,7 +63,7 @@ export default function Checkout() {
     for (let i = 0; i < cart.length; i++) {
       allQuantity += cart[i].quantity;
     }
-    console.log(cart);
+
     handletotalQuantity();
     let mycart = {
       totalAmount: sum,
@@ -74,107 +75,131 @@ export default function Checkout() {
       email: emailuser,
     };
 
-    //api custumer
-    setisBooksLoading(true);
-
-    //api detail
-    bookApi
-      .addDetail(user, mycart)
-      .then((response) => {
-        alert("Complete Request");
-        setCart([]);
-        saveLocalstorate([]);
-        setSum(0);
-      })
-      .catch((error) => {
-        //   handleLogError(error);
-      })
-      .finally(() => {
-        setisBooksLoading(false);
-        return <Redirect to="/" />;
-      });
+    if (
+      customerPhone === "" ||
+      customerPhone === null ||
+      customerPhone === undefined
+    ) {
+      alert("number phone is valid");
+    } else if (
+      customerAddress === "" ||
+      customerAddress === null ||
+      customerAddress === undefined
+    ) {
+      alert("address is valid");
+    } else {
+      setisBooksLoading(true);
+      bookApi
+        .addDetail(user, mycart)
+        .then((response) => {
+          setCart([]);
+          saveLocalstorate([]);
+          setSum(0);
+        })
+        .catch((error) => {
+          alert("lỗi không xác định");
+        })
+        .finally(() => {
+          setisBooksLoading(false);
+          if (isBooksLoading === false) {
+            return <Redirect to="/" />;
+          }
+        });
+    }
   };
-  return (
-    <Segment>
-      <Grid textAlign="center">
-        <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
-          <Form size="large">
-            <Segment loading={isBooksLoading}>
-              <Form.Input
-                readOnly
-                fluid
-                block
-                autoFocus
-                name="customerName"
-                icon="user"
-                iconPosition="left"
-                placeholder="Full Name"
-                value={nameuser}
-              />
-              <Form.Input
-                fluid
-                name="customerPhone"
-                icon="phone"
-                iconPosition="left"
-                placeholder="Numberphone"
-                type="number"
-                onChange={handleOnChange}
-              />
-              <Form.Input
-                fluid
-                name="customerAddress"
-                icon="address card"
-                iconPosition="left"
-                placeholder="Address"
-                onChange={handleOnChange}
-              />
-              <Form.Input
-                fluid
-                readOnly
-                name="customerEmail"
-                icon="at"
-                iconPosition="left"
-                placeholder="Email"
-                value={emailuser}
-              />
-              <Button
-                onClick={handleSubmitForm}
-                color="blue"
-                fluid
-                size="large"
-              >
-                Gửi
-              </Button>
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-      {/* asdasdasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssd */}
-      <Grid textAlign="center">
-        <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
-          {cart.map((item) => {
-            return (
-              <Item.Group>
-                <Item key={item.isbn}>
-                  <Image
-                    src={`http://covers.openlibrary.org/b/isbn/${item.isbn}-M.jpg`}
-                    size="tiny"
-                    bordered
-                    rounded
-                  />
-                  <Item.Content>
-                    <Item.Header>{item.title}</Item.Header>
-                    <Item.Meta>{item.isbn}</Item.Meta>
-                    <Item.Meta>Quantity: {item.quantity}</Item.Meta>
-                    <Item.Meta>Price: {item.price}VND</Item.Meta>
-                  </Item.Content>
-                </Item>
-              </Item.Group>
-            );
-          })}
-          <div>Price all:{sum}</div>
-        </Grid.Column>
-      </Grid>
-    </Segment>
-  );
+
+  if (sum === 0) {
+    return (
+      <div style={{ textAlign: "center", fontSize: "40px" }}>
+        <div className="completeBuy">Mua hàng thành công</div>
+        <Button href="/" className="completeBuy1">
+          Continue Buy
+        </Button>
+      </div>
+    );
+  } else {
+    return (
+      <Segment>
+        <Grid textAlign="center">
+          <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
+            <Form size="large">
+              <Segment loading={isBooksLoading}>
+                <Form.Input
+                  readOnly
+                  fluid
+                  block
+                  autoFocus
+                  name="customerName"
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="Full Name"
+                  value={nameuser}
+                />
+                <Form.Input
+                  fluid
+                  name="customerPhone"
+                  icon="phone"
+                  iconPosition="left"
+                  placeholder="Numberphone"
+                  type="number"
+                  onChange={handleOnChange}
+                />
+                <Form.Input
+                  fluid
+                  name="customerAddress"
+                  icon="address card"
+                  iconPosition="left"
+                  placeholder="Address"
+                  onChange={handleOnChange}
+                />
+                <Form.Input
+                  fluid
+                  readOnly
+                  name="customerEmail"
+                  icon="at"
+                  iconPosition="left"
+                  placeholder="Email"
+                  value={emailuser}
+                />
+                <Button
+                  onClick={handleSubmitForm}
+                  color="blue"
+                  fluid
+                  size="large"
+                >
+                  Gửi
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
+        {/* asdasdasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssd */}
+        <Grid textAlign="center">
+          <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
+            {cart.map((item) => {
+              return (
+                <Item.Group>
+                  <Item key={item.isbn}>
+                    <Image
+                      src={`http://covers.openlibrary.org/b/isbn/${item.isbn}-M.jpg`}
+                      size="tiny"
+                      bordered
+                      rounded
+                    />
+                    <Item.Content>
+                      <Item.Header>{item.title}</Item.Header>
+                      <Item.Meta>{item.isbn}</Item.Meta>
+                      <Item.Meta>Quantity: {item.quantity}</Item.Meta>
+                      <Item.Meta>Price: {item.price}VND</Item.Meta>
+                    </Item.Content>
+                  </Item>
+                </Item.Group>
+              );
+            })}
+            <div>Price all:{sum}</div>
+          </Grid.Column>
+        </Grid>
+      </Segment>
+    );
+  }
 }

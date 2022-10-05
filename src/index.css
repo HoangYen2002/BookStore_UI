@@ -45,6 +45,7 @@ code {
   height: 40px;
   width: 100%;
   margin-top: 20px;
+  text-align: center;
 }
 .Header_item_cart1{
   font-size: 40px;
@@ -59,14 +60,22 @@ code {
   color: #000;
 }
 .button_quay_lai{
-  padding: 5px;
+  padding: 10px;
+  cursor: pointer;
+  width: 100px;
+  position: relative;
+  top: 150px;
+  border-radius: 5px;
+
 }
 .button_quay_lai:hover{
   opacity: 0.8;
-  background-color: aquamarine;
+  background-color:#000;
+  color: white;
 }
 .Cart_emty{
   text-align: center;
+  display: flex;
 }
 .buttonAddtoCart{
   background-color: white;
@@ -81,7 +90,7 @@ code {
 
 .buttonAddtoCart:hover{
   color: white;
-  background-color: green;
+  background-color: black;
 }
 .button_quantity{
   border-radius: 100px;
@@ -89,4 +98,26 @@ code {
   background-color: #000;
   color: white;
   cursor: pointer;
+}
+.navbar{
+  background-color:black;
+  z-index: 10;
+  width: 100%;
+  padding: 0px;
+}
+.item_nav:hover{
+  background-color: aliceblue;
+  color: #000;
+}
+.completeBuy{
+  margin: 40px 0px;
+}
+.completeBuy1{
+  cursor: pointer;
+  border-radius: 2px;
+}
+.completeBuy1:hover{
+  background-color: black;
+  color: white;
+  transition: ease 0.4s;
 }
