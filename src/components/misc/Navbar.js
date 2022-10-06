@@ -103,6 +103,16 @@ function Navbar() {
         >
           Order
         </Menu.Item>
+
+        <Menu.Item
+          className="item_nav"
+          as={Link}
+          to="/orderuser"
+          style={userPageStyle()}
+        >
+          Order
+        </Menu.Item>
+
         <Menu.Menu position="right">
           <Menu.Item
             className="item_nav"

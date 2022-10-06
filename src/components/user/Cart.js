@@ -116,65 +116,57 @@ class Cart extends Component {
           My Cart
           {this.state.quantityCart ? this.state.quantityCart : <></>}
         </h1>
-        <Table compact striped selectable>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell width={2}>Image</Table.HeaderCell>
-              <Table.HeaderCell width={2}>ISBN</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Title</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Price</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Quantity</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Amount</Table.HeaderCell>
-              <Table.HeaderCell width={2}>Remove Item</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
+        {this.state.Sum_Price === 0 ? (
+          <div className="Cart_emty">
+            <div>
+              <img
+                src="https://www.novelty.com.vn/assets/empty_cart.jpeg"
+                alt=""
+              />
+            </div>
+            <div>
+              <Link className="link_icon_cart" to={"/userpage"}>
+                <button className="button_quay_lai">Tiếp Tục Mua Hàng</button>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
             {" "}
-            {this.state.Sum_Price === 0 ? (
-              <div className="Cart_emty">
-                <div>
-                  <img
-                    src="https://www.novelty.com.vn/assets/empty_cart.jpeg"
-                    alt=""
-                  />
-                </div>
-                <div>
-                  <Link className="link_icon_cart" to={"/userpage"}>
-                    <button className="button_quay_lai">
-                      Tiếp Tục Mua Hàng
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              <>
+            <Table compact striped selectable>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell width={2}>Image</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>ISBN</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Title</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Price</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Quantity</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Amount</Table.HeaderCell>
+                  <Table.HeaderCell width={2}>Remove Item</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
                 {this.state.cart.map((book) => {
                   return (
-                    <>
-                      {this.state.cart.length === 0 ? (
-                        <div key={book.isbn}>haha</div>
-                      ) : (
-                        <ItemCart
-                          handleTangSoLuong={this.handleTangSoLuong}
-                          handlegiamSoLuong={this.handlegiamSoLuong}
-                          key={book.isbn}
-                          handleRemoveItemCart={this.handleRemoveItemCart}
-                          book={book}
-                        ></ItemCart>
-                      )}
-                    </>
+                    <ItemCart
+                      handleTangSoLuong={this.handleTangSoLuong}
+                      handlegiamSoLuong={this.handlegiamSoLuong}
+                      key={book.isbn}
+                      handleRemoveItemCart={this.handleRemoveItemCart}
+                      book={book}
+                    ></ItemCart>
                   );
                 })}
-              </>
-            )}
-          </Table.Body>
-        </Table>
-        <div className="Header_item_cart">
-          Total Amount:{this.state.Sum_Price}
-        </div>
-        <Item className="Header_item_cart">
-          <Button href="/checkout">Buy</Button>
-        </Item>
+              </Table.Body>
+            </Table>
+            <div className="Header_item_cart">
+              Total Amount:{this.state.Sum_Price}
+            </div>
+            <Item className="Header_item_cart">
+              <Button href="/checkout">Buy</Button>
+            </Item>
+          </>
+        )}
       </Container>
     );
   }

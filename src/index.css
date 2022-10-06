@@ -121,3 +121,13 @@ code {
   color: white;
   transition: ease 0.4s;
 }
+.validPhone{
+color: red;
+margin: 0px;
+padding: 0px;
+font-size: 10px;
+}
+.customerPhone{
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}

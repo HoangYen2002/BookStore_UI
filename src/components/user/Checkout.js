@@ -7,6 +7,7 @@ import { bookApi } from "../misc/BookApi";
 import { Redirect } from "react-router";
 
 export default function Checkout() {
+  const [validPhone, setvalidPhone] = useState(false);
   const [cart, setCart] = useState([]);
   const [customerPhone, setcustomerPhone] = useState();
   const [customerAddress, setcustomerAddress] = useState();
@@ -45,7 +46,15 @@ export default function Checkout() {
     setorderDetail(mangOrderDetail);
   };
   const handleOnChange = (e) => {
+    var phone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     if (e.target.name === "customerPhone") {
+      if (phone.exec(e.target.value)) {
+        setvalidPhone(false);
+        console.log("dung");
+      } else {
+        setvalidPhone(true);
+        console.log("kkhac");
+      }
       setcustomerPhone(e.target.value);
     } else if (e.target.name === "customerAddress") {
       setcustomerAddress(e.target.value);
@@ -136,7 +145,7 @@ export default function Checkout() {
                   value={nameuser}
                 />
                 <Form.Input
-                  fluid
+                  className=""
                   name="customerPhone"
                   icon="phone"
                   iconPosition="left"
@@ -144,6 +153,10 @@ export default function Checkout() {
                   type="number"
                   onChange={handleOnChange}
                 />
+                <p className="validPhone">
+                  {validPhone === true ? "Valid Phone" : ""}
+                </p>
+
                 <Form.Input
                   fluid
                   name="customerAddress"
