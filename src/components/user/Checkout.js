@@ -50,10 +50,8 @@ export default function Checkout() {
     if (e.target.name === "customerPhone") {
       if (phone.exec(e.target.value)) {
         setvalidPhone(false);
-        console.log("dung");
       } else {
         setvalidPhone(true);
-        console.log("kkhac");
       }
       setcustomerPhone(e.target.value);
     } else if (e.target.name === "customerAddress") {

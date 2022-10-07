@@ -1,16 +1,34 @@
-import React from 'react'
-import { Tab } from 'semantic-ui-react'
-import UserTable from './UserTable'
-import BookTable from './BookTable'
+import React from "react";
+import { Tab } from "semantic-ui-react";
+import UserTable from "./UserTable";
+import BookTable from "./BookTable";
 
 function AdminTab(props) {
-  const { handleInputChange } = props
-  const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleSearchUser } = props
-  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook } = props
+  const { handleInputChange } = props;
+  const {
+    isUsersLoading,
+    users,
+    userUsernameSearch,
+    handleDeleteUser,
+    handleSearchUser,
+    handleSetDataUpForm,
+  } = props;
+  const {
+    isBooksLoading,
+    books,
+    bookIsbn,
+    bookTitle,
+    price,
+    bookTextSearch,
+    handleAddBook,
+    handleDeleteBook,
+    handleSearchBook,
+    handleClear,
+  } = props;
 
   const panes = [
     {
-      menuItem: { key: 'users', icon: 'users', content: 'Users' },
+      menuItem: { key: "users", icon: "users", content: "Users" },
       render: () => (
         <Tab.Pane loading={isUsersLoading}>
           <UserTable
@@ -21,16 +39,19 @@ function AdminTab(props) {
             handleSearchUser={handleSearchUser}
           />
         </Tab.Pane>
-      )
+      ),
     },
     {
-      menuItem: { key: 'books', icon: 'book', content: 'Books' },
+      menuItem: { key: "books", icon: "book", content: "Books" },
       render: () => (
         <Tab.Pane loading={isBooksLoading}>
           <BookTable
+            handleSetDataUpForm={handleSetDataUpForm}
+            handleClear={handleClear}
             books={books}
             bookIsbn={bookIsbn}
             bookTitle={bookTitle}
+            price={price}
             bookTextSearch={bookTextSearch}
             handleInputChange={handleInputChange}
             handleAddBook={handleAddBook}
@@ -38,13 +59,11 @@ function AdminTab(props) {
             handleSearchBook={handleSearchBook}
           />
         </Tab.Pane>
-      )
-    }
-  ]
+      ),
+    },
+  ];
 
-  return (
-    <Tab menu={{ attached: 'top' }} panes={panes} />
-  )
+  return <Tab menu={{ attached: "top" }} panes={panes} />;
 }
 
-export default AdminTab
+export default AdminTab;

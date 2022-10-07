@@ -13,17 +13,17 @@ import {
 import { bookApi } from "../misc/BookApi";
 export default function Order() {
   const [orderUser, setOrderUser] = useState([]);
-  const [user, setuser] = useState([]);
+  const [user, setuser] = useState();
 
   useEffect(() => {
     let user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
-    if (user && user.role === "ADMIN") {
+
+    setuser(user);
+    if (user && user.role === "USER") {
       bookApi
-        .getDetail(user)
+        .getOrderUser(user, user.name)
         .then((response) => {
           setOrderUser(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
           //   handleLogError(error);

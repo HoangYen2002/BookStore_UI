@@ -18,15 +18,18 @@ class Cart extends Component {
   };
   handleRemoveItemCart = (item) => {
     let mang = this.state.cart;
-
+    var quantityall = this.state.quantityCart;
+    console.log(quantityall);
     for (var i = 0; i < mang.length; i++) {
       if (mang[i].isbn === item.isbn) {
         mang.splice(i, 1);
+        quantityall = quantityall - item.quantity;
       }
     }
     this.setState((prevState) => {
       prevState.cart = mang;
-      prevState.quantityCart = mang.quantity;
+      prevState.quantityCart = quantityall;
+
       return prevState;
     });
     this.handleSum(mang);
@@ -54,13 +57,16 @@ class Cart extends Component {
   };
   handlegiamSoLuong = (item) => {
     let mang = this.state.cart;
+    var quantityAll = this.state.quantityCart;
     for (var i = 0; i < mang.length; i++) {
       if (mang[i].isbn === item.isbn) {
         if (mang[i].quantity > 1) {
           mang[i].quantity -= 1;
           mang[i].amount = item.price * item.quantity;
+          quantityAll -= 1;
         } else {
           this.handleRemoveItemCart(item);
+          quantityAll -= 1;
           this.setState((prevState) => {
             prevState.quantityCart = this.state.quantityCart;
             return prevState;
@@ -70,7 +76,7 @@ class Cart extends Component {
     }
     this.setState((prevState) => {
       prevState.cart = mang;
-      prevState.quantityCart = this.state.quantityCart - 1;
+      prevState.quantityCart = quantityAll;
       return prevState;
     });
     this.saveLocalstorate(mang);
@@ -93,9 +99,7 @@ class Cart extends Component {
       quantitycartt += mang[i].quantity;
     }
 
-    this.setState({ quantityCart: quantitycartt }, () =>
-      this.setState({ quantityCart: this.state.quantityCart })
-    );
+    this.setState({ quantityCart: quantitycartt });
   };
   componentDidMount = () => {
     const datacart = localStorage.getItem("cart");

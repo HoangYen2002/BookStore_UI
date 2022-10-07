@@ -16,6 +16,8 @@ class Signup extends Component {
     isLoggedIn: false,
     isError: false,
     errorMessage: "",
+    validEmail: false,
+    validName: false,
   };
 
   componentDidMount() {
@@ -25,18 +27,45 @@ class Signup extends Component {
   }
 
   handleInputChange = (e, { name, value }) => {
+    let regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    let regexname =
+      /[^a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u;
+
     this.setState({ [name]: value });
+
+    if (regexEmail.exec(this.state.email)) {
+      this.setState({
+        validEmail: false,
+      });
+    } else {
+      this.setState({
+        validEmail: true,
+      });
+    }
+
+    if (regexname.exec(this.state.name)) {
+      this.setState({
+        validName: false,
+      });
+    } else {
+      this.setState({
+        validName: true,
+      });
+    }
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { username, password, name, email } = this.state;
+    const { username, password, name, email, validEmail, validName } =
+      this.state;
     if (!(username && password && name && email)) {
       this.setState({
         isError: true,
         errorMessage: "Please, inform all fields!",
       });
+      return;
+    } else if (validEmail === true || validName === true) {
       return;
     }
 
@@ -65,7 +94,7 @@ class Signup extends Component {
         handleLogError(error);
         if (error.response && error.response.data) {
           const errorData = error.response.data;
-          let errorMessage = "Invalid fields";
+          let errorMessage = error.response.data.message;
           if (errorData.status === 409) {
             errorMessage = errorData.message;
           } else if (errorData.status === 400) {
@@ -115,6 +144,11 @@ class Signup extends Component {
                   placeholder="Name"
                   onChange={this.handleInputChange}
                 />
+                {this.state.validName === true ? (
+                  <p className="validPhone">Not Type Name</p>
+                ) : (
+                  <></>
+                )}
                 <Form.Input
                   fluid
                   name="email"
@@ -123,6 +157,12 @@ class Signup extends Component {
                   placeholder="Email"
                   onChange={this.handleInputChange}
                 />
+                {this.state.validEmail === true ? (
+                  <p className="validPhone">Not Type Email</p>
+                ) : (
+                  <></>
+                )}
+
                 <Button color="blue" fluid size="large">
                   Signup
                 </Button>
