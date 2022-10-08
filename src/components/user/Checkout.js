@@ -207,7 +207,7 @@ export default function Checkout() {
                 </Item.Group>
               );
             })}
-            <div>Price all:{sum}</div>
+            <div>Amount: {sum}</div>
           </Grid.Column>
         </Grid>
       </Segment>

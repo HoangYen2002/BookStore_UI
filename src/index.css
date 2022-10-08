@@ -28,12 +28,17 @@ code {
   grid-template-columns: 40% 40% 20%;
 }
 .remove_item_cart{
-  background-color: red;
-  height: 50px;
-  width: 70px;
+  
+  height: 30px;
+  width: 40px;
   cursor: pointer;
   position: relative;
   border-radius: 10px;
+  
+}
+.remove_item_cart:hover{
+  transition: ease-in 0.3s ;
+  background-color: red;
   
 }
 .img_item_cart{

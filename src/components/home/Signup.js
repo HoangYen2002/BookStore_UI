@@ -33,24 +33,27 @@ class Signup extends Component {
 
     this.setState({ [name]: value });
 
-    if (regexEmail.exec(this.state.email)) {
-      this.setState({
-        validEmail: false,
-      });
-    } else {
-      this.setState({
-        validEmail: true,
-      });
+    if (name === "email") {
+      if (regexEmail.exec(value)) {
+        this.setState({
+          validEmail: false,
+        });
+      } else {
+        this.setState({
+          validEmail: true,
+        });
+      }
     }
-
-    if (regexname.exec(this.state.name)) {
-      this.setState({
-        validName: false,
-      });
-    } else {
-      this.setState({
-        validName: true,
-      });
+    if (name === "name") {
+      if (regexname.exec(value)) {
+        this.setState({
+          validName: false,
+        });
+      } else {
+        this.setState({
+          validName: true,
+        });
+      }
     }
   };
 

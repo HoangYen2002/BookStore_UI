@@ -75,7 +75,7 @@ function Navbar() {
       style={{ borderRadius: 0, position: top, height: height + "px" }}
     >
       <Container>
-        <Menu.Item header>Book-UI</Menu.Item>
+        <Menu.Item header>Happy Book</Menu.Item>
         <Menu.Item className="item_nav" as={Link} exact="true" to="/">
           Home
         </Menu.Item>
@@ -85,7 +85,7 @@ function Navbar() {
           to="/adminpage"
           style={adminPageStyle()}
         >
-          AdminPage
+          Manager Books
         </Menu.Item>
         <Menu.Item
           className="item_nav"
@@ -93,7 +93,7 @@ function Navbar() {
           to="/userpage"
           style={userPageStyle()}
         >
-          UserPage
+          Books
         </Menu.Item>
         <Menu.Item
           className="item_nav"
