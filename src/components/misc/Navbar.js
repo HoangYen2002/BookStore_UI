@@ -93,7 +93,7 @@ function Navbar() {
           to="/userpage"
           style={userPageStyle()}
         >
-          Books
+          Books Store
         </Menu.Item>
         <Menu.Item
           className="item_nav"
