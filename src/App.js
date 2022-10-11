@@ -30,6 +30,7 @@ function App() {
         <PrivateRoute path="/checkout" component={Checkout} />
         <PrivateRoute path="/detail" component={Detail} />
         <PrivateRoute path="/orderuser" component={Order} />
+        {/* <Route path="*" element={} /> */}
       </Router>
     </AuthProvider>
   );

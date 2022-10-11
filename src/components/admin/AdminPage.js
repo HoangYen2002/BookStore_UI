@@ -145,13 +145,13 @@ class AdminPage extends Component {
       price: price,
       id: bookIsbn,
     };
-    console.log(book);
+
     bookApi
       .addBook(user, book)
-      .then(() => {
+      .then((response) => {
+        alert("complete");
         this.clearBookForm();
         this.handleGetBooks();
-        alert("ADD complete");
       })
       .catch((error) => {
         handleLogError(error);

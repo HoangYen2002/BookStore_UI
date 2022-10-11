@@ -117,9 +117,12 @@ class Cart extends Component {
     return (
       <Container>
         <h1>
-          My Cart
+          My Cart:
           {this.state.quantityCart ? this.state.quantityCart : <></>}
         </h1>
+        <div className="Header_item_cart">
+          Total Amount:{this.state.Sum_Price}
+        </div>
         {this.state.Sum_Price === 0 ? (
           <div className="Cart_emty">
             <div>
@@ -163,9 +166,6 @@ class Cart extends Component {
                 })}
               </Table.Body>
             </Table>
-            <div className="Header_item_cart">
-              Total Amount:{this.state.Sum_Price}
-            </div>
             <Item className="Header_item_cart">
               <Button href="/checkout">Buy</Button>
             </Item>

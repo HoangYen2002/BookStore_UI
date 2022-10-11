@@ -12,7 +12,8 @@ export default function Checkout() {
   const [customerPhone, setcustomerPhone] = useState();
   const [customerAddress, setcustomerAddress] = useState();
   const [sum, setSum] = useState();
-  const [orderDetail, setorderDetail] = useState([]);
+  const [totalquantity, setTotalquantity] = useState(0);
+
   const [isBooksLoading, setisBooksLoading] = useState(false);
   const [nameuser, setnameuser] = useState("");
   const [emailuser, setemailuser] = useState("");
@@ -20,17 +21,16 @@ export default function Checkout() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     const datacart = localStorage.getItem("cart");
-    handletotalQuantity();
     setnameuser(user.name);
-    console.log(user);
     setemailuser(user.email);
+
     let mang = JSON.parse(datacart);
+
     setCart(mang);
     handleSum(mang);
-    setOrderDetaill(mang);
+    handleQuantityCart(mang);
   }, []);
 
-  const handletotalQuantity = () => {};
   const handleSum = (mang) => {
     var Sum = 0;
     for (var i = 0; i < mang.length; i++) {
@@ -38,13 +38,7 @@ export default function Checkout() {
     }
     setSum(Sum);
   };
-  const setOrderDetaill = (mang) => {
-    var mangOrderDetail = [];
 
-    mangOrderDetail = mang;
-
-    setorderDetail(mangOrderDetail);
-  };
   const handleOnChange = (e) => {
     var phone = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     if (e.target.name === "customerPhone") {
@@ -64,6 +58,15 @@ export default function Checkout() {
     localStorage.setItem("cart", data_save);
   };
 
+  const handleQuantityCart = (mang) => {
+    var quantitycartt = 0;
+    for (var i = 0; i < mang.length; i++) {
+      quantitycartt += mang[i].quantity;
+    }
+
+    setTotalquantity(quantitycartt);
+  };
+
   const handleSubmitForm = () => {
     var user = JSON.parse(localStorage.getItem("user"));
     let allQuantity = 0;
@@ -71,7 +74,6 @@ export default function Checkout() {
       allQuantity += cart[i].quantity;
     }
 
-    handletotalQuantity();
     let mycart = {
       totalAmount: sum,
       totalQuantity: allQuantity,
@@ -119,6 +121,15 @@ export default function Checkout() {
     return (
       <div style={{ textAlign: "center", fontSize: "40px" }}>
         <div className="completeBuy">Mua hàng thành công</div>
+        <div className="completeBuyy">Doumo arigatou gozaimasu</div>
+        <div>
+          <img
+            className="imgsuccess"
+            src="https://s9.favim.com/orig/131110/cat-cute-followers-funny-Favim.com-1048338.gif"
+            alt=""
+          />
+        </div>
+
         <Button href="/" className="completeBuy1">
           Continue Buy
         </Button>
@@ -184,9 +195,13 @@ export default function Checkout() {
             </Form>
           </Grid.Column>
         </Grid>
+
         {/* asdasdasasssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssd */}
         <Grid textAlign="center">
           <Grid.Column style={{ maxWidth: 850, maxHeight: 800 }}>
+            <div className="list_product">Amount: {sum}</div>
+            <div className="list_product">Total Quatity: {totalquantity}</div>
+            <h1>List of purchased products </h1>
             {cart.map((item) => {
               return (
                 <Item.Group>
@@ -207,7 +222,6 @@ export default function Checkout() {
                 </Item.Group>
               );
             })}
-            <div>Amount: {sum}</div>
           </Grid.Column>
         </Grid>
       </Segment>

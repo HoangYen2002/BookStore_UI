@@ -32,8 +32,13 @@ function BookForm({
           value={price}
           onChange={handleInputChange}
         />
-        <Button icon labelPosition="right" disabled={createBtnDisabled}>
-          Create
+        <Button
+          className="icon_add"
+          icon
+          labelPosition="right"
+          disabled={createBtnDisabled}
+        >
+          Update
           <Icon name="add" />
         </Button>
       </Form.Group>

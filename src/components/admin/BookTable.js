@@ -79,7 +79,7 @@ function BookTable({
             />
             <Button icon labelPosition="right" onClick={handleClear}>
               Clear
-              <Icon name="clear" />
+              <Icon name="x" />
             </Button>
           </Grid.Column>
         </Grid.Row>
