@@ -29,7 +29,7 @@ function Navbar() {
   const isMouseDown = () => {
     const scrollWindowHeight = window.pageYOffset;
     // console.log(scrollWindowHeight);
-    if (scrollWindowHeight >= 10) {
+    if (scrollWindowHeight >= 50) {
       settop("fixed");
       setheight(30);
     } else {
@@ -72,7 +72,7 @@ function Navbar() {
       className="navbar"
       stackable
       size="massive"
-      style={{ borderRadius: 0, position: top, height: height + "px" }}
+      style={{ borderRadius: 0, position: top }}
     >
       <Container>
         <Menu.Item header>Happy Book</Menu.Item>
@@ -85,7 +85,7 @@ function Navbar() {
           to="/adminpage"
           style={adminPageStyle()}
         >
-          Manager Books
+          Manage Books
         </Menu.Item>
         <Menu.Item
           className="item_nav"

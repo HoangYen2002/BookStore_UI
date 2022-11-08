@@ -4,6 +4,7 @@ import { AuthProvider } from "./components/context/AuthContext";
 import PrivateRoute from "./components/misc/PrivateRoute";
 import Navbar from "./components/misc/Navbar";
 import Home from "./components/home/Home";
+import PageNotF from "./components/home/PageNotF";
 import Login from "./components/home/Login";
 import Signup from "./components/home/Signup";
 import AdminPage from "./components/admin/AdminPage";
@@ -30,7 +31,7 @@ function App() {
         <PrivateRoute path="/checkout" component={Checkout} />
         <PrivateRoute path="/detail" component={Detail} />
         <PrivateRoute path="/orderuser" component={Order} />
-        {/* <Route path="*" element={} /> */}
+        <Route path="*" element={<PageNotF />} />
       </Router>
     </AuthProvider>
   );

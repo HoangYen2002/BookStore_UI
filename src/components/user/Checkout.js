@@ -155,12 +155,15 @@ export default function Checkout() {
                 />
                 <Form.Input
                   className=""
+                  error
                   name="customerPhone"
                   icon="phone"
                   iconPosition="left"
                   placeholder="Numberphone"
                   type="number"
                   onChange={handleOnChange}
+                  aria-describedby="component-error-text"
+                  id="component-error"
                 />
                 <p className="validPhone">
                   {validPhone === true ? "Valid Phone" : ""}
@@ -216,7 +219,7 @@ export default function Checkout() {
                       <Item.Header>{item.title}</Item.Header>
                       <Item.Meta>{item.isbn}</Item.Meta>
                       <Item.Meta>Quantity: {item.quantity}</Item.Meta>
-                      <Item.Meta>Price: {item.price}VND</Item.Meta>
+                      <Item.Meta>Price: {item.price} VND</Item.Meta>
                     </Item.Content>
                   </Item>
                 </Item.Group>
